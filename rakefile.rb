@@ -1,9 +1,5 @@
 require 'dotkit'
 
-task :setup do
-  Raykit::DotNet::initialize_csharp_lib('Git.Files')
-end
-
 task :publish => [:test] do
     if(!ENV['NUGET_KEY'].nil?)
         SECRETS['NUGET_KEY'] = ENV['NUGET_KEY']
@@ -17,4 +13,4 @@ end
 
 
 
-task :default => [:test,:publish]
+task :default => [:test,:integrate,:publish]
