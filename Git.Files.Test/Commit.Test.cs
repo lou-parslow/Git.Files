@@ -33,5 +33,19 @@ namespace Git.Files.Test
                     + Path.DirectorySeparatorChar + "Git.Files";
             Assert.False(Directory.Exists(path));
         }
+
+        [Test]
+        public void InvalidUrl()
+        {
+            var commit = new Commit("https://github.com/lou-parslow/Invalid.Sample.Files.git", "3e4b242");
+            Assert.Throws<Exception>(() => commit.GetFileName("Sample.Files/Resources/Text/Lorum.Ipsum.txt"));
+        }
+
+        [Test]
+        public void InvalidCommit()
+        {
+            var commit = new Commit("https://github.com/lou-parslow/Sample.Files.git", "xe4b242");
+            Assert.Throws<Exception>(() => commit.GetFileName("Sample.Files/Resources/Text/Lorum.Ipsum.txt"));
+        }
     }
 }

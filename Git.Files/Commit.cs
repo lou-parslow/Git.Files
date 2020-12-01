@@ -24,7 +24,7 @@ namespace Git.Files
             }
         }
 
-        private string CommitPath { get { return RootPath + Path.DirectorySeparatorChar + CommitId; } }
+        private string CommitPath { get { return RootPath + Path.DirectorySeparatorChar + Url.Replace("://",".") + Path.DirectorySeparatorChar + CommitId; } }
 
         public static void Clobber()
         {
@@ -44,35 +44,51 @@ namespace Git.Files
             }
         }
 
-        public Stream? GetStream(string name)
+        private void SetupCommitPath()
         {
             if (!Directory.Exists(CommitPath))
             {
-                var dir_info = new DirectoryInfo(CommitPath);
-                if (!dir_info.Parent!.Exists)
+                try
                 {
-                    dir_info.Parent.Create();
-                }
-                var clone = "git clone " + Url + " " + CommitId;
-                if (Execute(clone, dir_info.Parent.ToString()) == 0)
-                {
-                    var checkout = "git checkout " + CommitId;
-                    if (Execute(checkout, CommitPath) == 0)
+                    var dir_info = new DirectoryInfo(CommitPath);
+                    if (!dir_info.Parent!.Exists)
                     {
-                        SetReadOnly(dir_info);
+                        dir_info.Parent.Create();
+                    }
+                    var clone = "git clone " + Url + " " + CommitId;
+                    if (Execute(clone, dir_info.Parent.ToString()) == 0)
+                    {
+                        var checkout = "git checkout " + CommitId;
+                        if (Execute(checkout, CommitPath) == 0)
+                        {
+                            SetReadOnly(dir_info);
+                        }
+                        else
+                        {
+                            throw new Exception("command '" + checkout + "' failed");
+                        }
                     }
                     else
                     {
-                        throw new Exception("command '" + checkout + "' failed");
+                        Clean();
+                        throw new Exception("command '" + clone + "' failed");
                     }
                 }
-                else
+                catch(Exception e)
                 {
-                    Clean();
-                    throw new Exception("command '" + clone + "' failed");
+                    var dir_info = new DirectoryInfo(CommitPath);
+                    DeleteAll(dir_info);
+                    if (dir_info.Parent!.Exists && dir_info.Parent.GetDirectories().Length == 0)
+                    {
+                        dir_info.Parent.Delete();
+                    }
+                    throw new Exception("Error setting up " + Url + "@" + CommitId,e);
                 }
             }
-
+        }
+        public Stream? GetStream(string name)
+        {
+            SetupCommitPath();
             var filename = GetFileName(name);
             if (File.Exists(filename))
             {
@@ -88,6 +104,7 @@ namespace Git.Files
 
         public string GetFileName(string name)
         {
+            SetupCommitPath();
             return CommitPath + Path.DirectorySeparatorChar + name;
         }
 
