@@ -12,8 +12,8 @@ namespace Git.Files
         {
             if(Streams.GetCommit(name) is Commit commit)
             {
-                var url = name.Split("@")[0];
-                var commit_id = name.Split("@")[1].Split("/")[0];
+                var url = name.Split('@')[0];
+                var commit_id = name.Split('@')[1].Split('/')[0];
                 var rel_path = name.Replace(url + "@" + commit_id, "").Substring(1);
                 return commit.GetStream(rel_path);
             }
@@ -24,8 +24,8 @@ namespace Git.Files
         {
             if (Streams.GetCommit(name) is Commit commit)
             {
-                var url = name.Split("@")[0];
-                var commit_id = name.Split("@")[1].Split("/")[0];
+                var url = name.Split('@')[0];
+                var commit_id = name.Split('@')[1].Split('/')[0];
                 var rel_path = name.Replace(url + "@" + commit_id, "").Substring(1);
                 return commit.GetFileName(rel_path);
             }
@@ -36,8 +36,8 @@ namespace Git.Files
         {
             if (name.Contains("@"))
             {
-                var url = name.Split("@")[0];
-                var commit_id = name.Split("@")[1].Split("/")[0];
+                var url = name.Split('@')[0];
+                var commit_id = name.Split('@')[1].Split('/')[0];
                 var rel_path = name.Replace(url + "@" + commit_id, "").Substring(1);
                 return new Commit(url, commit_id);
             }

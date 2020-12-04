@@ -115,7 +115,7 @@ namespace Git.Files
                 throw new ArgumentNullException(nameof(command));
             }
 
-            var parts = command.Split(" ");
+            var parts = command.Split(' ');
             var arguments = parts.Skip(1);
 
             System.Diagnostics.Debug.WriteLine("command " + parts[0]);
