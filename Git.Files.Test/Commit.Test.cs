@@ -13,6 +13,7 @@ namespace Git.Files.Test
 
             var commit = new Commit("https://github.com/lou-parslow/Sample.Files.git", "3e4b242");
             commit.Clean();
+            Assert.True(File.Exists(commit.GetFileName("Sample.Files/Resources/Text/Lorum.Ipsum.txt")));
             var lorum_stream = commit.GetStream("Sample.Files/Resources/Text/Lorum.Ipsum.txt");
             using (var lorum = new StreamReader(lorum_stream))
             {

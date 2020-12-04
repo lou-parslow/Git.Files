@@ -20,12 +20,31 @@ namespace Git.Files
         {
             get
             {
-                return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
-                    + Path.DirectorySeparatorChar + "Git.Files";
+                try
+                {
+                    var path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
+                        + Path.DirectorySeparatorChar + "Git.Files";
+                    return path;
+                }
+                catch(Exception e)
+                {
+                    throw new Exception("Unable to setup RootPath for Git.Files", e);
+                }
             }
         }
 
-        private string CommitPath { get { return RootPath + Path.DirectorySeparatorChar + Url.Replace("://",".") + Path.DirectorySeparatorChar + CommitId; } }
+        private string CommitPath { get 
+            {
+                try
+                {
+                    return RootPath + Path.DirectorySeparatorChar + Url.Replace("://", ".") + Path.DirectorySeparatorChar + CommitId;
+                }
+                catch(Exception e)
+                {
+                    throw new Exception("Unable to setup CommitPath, RootPath: " + RootPath + "Url: " + Url + " CommitId:" + CommitId, e);
+                }
+            } 
+        }
 
         public static void Clobber()
         {
@@ -84,7 +103,7 @@ namespace Git.Files
                     {
                         dir_info.Parent.Delete();
                     }
-                    throw new Exception("Error setting up " + Url + "@" + CommitId,e);
+                    throw new Exception("Error setting up " + Url + "@" + CommitId ,e);
                 }
             }
         }
