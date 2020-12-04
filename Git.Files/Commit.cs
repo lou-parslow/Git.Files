@@ -77,11 +77,16 @@ namespace Git.Files
                         dir_info.Parent.Create();
                     }
                     var clone = "git clone " + Url + " " + CommitId;
-                    if (Execute(clone, dir_info.Parent.ToString()) == 0)
+                    if (Execute(clone, dir_info.Parent.FullName) == 0)
                     {
+                        if (!Directory.Exists(CommitPath))
+                        {
+                            throw new Exception("Commit Path " + CommitPath + " does not exist after " + clone + " in " + dir_info.Parent.FullName);
+                        }
                         var checkout = "git checkout " + CommitId;
                         if (Execute(checkout, CommitPath) == 0)
                         {
+                            
                             SetReadOnly(dir_info);
                         }
                         else
