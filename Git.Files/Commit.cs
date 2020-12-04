@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Git.Files
 {
@@ -119,6 +120,15 @@ namespace Git.Files
             var parts = command.Split(' ');
             var arguments = parts.Skip(1);
 
+            var exe_name = GetExecutableFilename(parts[0]);
+            if(!File.Exists(exe_name))
+            {
+                throw new Exception("Unable to determine executable filename for " + parts[0]);
+            }
+            if (!Directory.Exists(directory))
+            {
+                throw new Exception("Directory " + directory + " does not exist");
+            }
             System.Diagnostics.Debug.WriteLine("command " + parts[0]);
             System.Diagnostics.Debug.WriteLine("arguments " + String.Join(" ", arguments));
             var process = new System.Diagnostics.Process
