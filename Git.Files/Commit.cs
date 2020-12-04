@@ -53,6 +53,7 @@ namespace Git.Files
                     var dir_info = new DirectoryInfo(CommitPath);
                     if (!dir_info.Parent!.Exists)
                     {
+                        System.IO.Directory.CreateDirectory(dir_info.Parent.FullName);
                         dir_info.Parent.Create();
                     }
                     var clone = "git clone " + Url + " " + CommitId;
