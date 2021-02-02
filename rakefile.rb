@@ -1,4 +1,4 @@
-require 'dotkit'
+ require 'dotkit'
 
 task :publish => [:test] do
     if(!ENV['NUGET_KEY'].nil?)
