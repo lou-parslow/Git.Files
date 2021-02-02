@@ -39,7 +39,7 @@ namespace Git.Files
                 var url = name.Split('@')[0];
                 var commit_id = name.Split('@')[1].Split('/')[0];
                 var rel_path = name.Replace(url + "@" + commit_id, "").Substring(1);
-                return new Commit(url, commit_id);
+                return new Commit(new Uri(url), commit_id);
             }
             
             return null;

@@ -7,19 +7,28 @@ namespace Git.Files
 {
     public class Commit
     {
-        public Commit(string url, string commit_id)
+        public Commit(Uri url, string commitId)
         {
             Url = url;
-            CommitId = commit_id;
+            CommitId = commitId;
         }
 
-        public string Url { get; }
+        public Commit(string url,string commitId)
+		{
+            Url = new Uri(url);
+            CommitId = commitId;
+		}
+
+        public Uri Url { get; }
         public string CommitId { get; }
 
         private static string RootPath
         {
             get
             {
+                return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
+                        + Path.DirectorySeparatorChar + "Git.Files";
+                /*
                 try
                 {
                     var path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
@@ -29,20 +38,21 @@ namespace Git.Files
                 catch(Exception e)
                 {
                     throw new Exception("Unable to setup RootPath for Git.Files", e);
-                }
+                }*/
             }
         }
 
         private string CommitPath { get 
             {
-                try
-                {
-                    return RootPath + Path.DirectorySeparatorChar + Url.Replace("://", ".") + Path.DirectorySeparatorChar + CommitId;
-                }
-                catch(Exception e)
-                {
-                    throw new Exception("Unable to setup CommitPath, RootPath: " + RootPath + "Url: " + Url + " CommitId:" + CommitId, e);
-                }
+                //try
+                //{
+                    string pathUrl = Url.ToString().Replace("://", ".");
+                    return RootPath + Path.DirectorySeparatorChar + pathUrl + Path.DirectorySeparatorChar + CommitId;
+                //}
+                //catch(Exception e)
+                //{
+                //    throw new Exception("Unable to setup CommitPath, RootPath: " + RootPath + "Url: " + Url + " CommitId:" + CommitId, e);
+                //}
             } 
         }
 
@@ -131,7 +141,12 @@ namespace Git.Files
         public string GetFileName(string name)
         {
             SetupCommitPath();
-            return CommitPath + Path.DirectorySeparatorChar + name;
+            string filename = CommitPath + Path.DirectorySeparatorChar + name;
+            if(!File.Exists(filename))
+			{
+                throw new Exception($"file {filename} does not exist.");
+			}
+            return filename;
         }
 
         private static int Execute(string command, string directory)
@@ -256,11 +271,22 @@ namespace Git.Files
                 }
                 foreach (DirectoryInfo cdi in directory.GetDirectories())
                 {
-                    ClearReadOnly(cdi);
-                    //cdi.ClearReadOnly();
-                    cdi.Delete(true);
+                    if (cdi.Exists)
+                    {
+                        ClearReadOnly(cdi);
+                        //cdi.ClearReadOnly();
+                        try
+                        {
+                            cdi.Delete(true);
+                        }
+                        catch { }
+                    }
                 }
-                System.IO.Directory.Delete(directory.FullName, true);
+                try
+                {
+                    System.IO.Directory.Delete(directory.FullName, true);
+                }
+                catch { }
             }
         }
     }
