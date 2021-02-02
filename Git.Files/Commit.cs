@@ -28,31 +28,15 @@ namespace Git.Files
             {
                 return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
                         + Path.DirectorySeparatorChar + "Git.Files";
-                /*
-                try
-                {
-                    var path = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
-                        + Path.DirectorySeparatorChar + "Git.Files";
-                    return path;
-                }
-                catch(Exception e)
-                {
-                    throw new Exception("Unable to setup RootPath for Git.Files", e);
-                }*/
             }
         }
 
         private string CommitPath { get 
             {
-                //try
-                //{
-                    string pathUrl = Url.ToString().Replace("://", ".");
-                    return RootPath + Path.DirectorySeparatorChar + pathUrl + Path.DirectorySeparatorChar + CommitId;
-                //}
-                //catch(Exception e)
-                //{
-                //    throw new Exception("Unable to setup CommitPath, RootPath: " + RootPath + "Url: " + Url + " CommitId:" + CommitId, e);
-                //}
+
+                    //string pathUrl = Url.ToString().Replace("://", ".");
+                    return RootPath + Path.DirectorySeparatorChar + Url.ToString().Replace("://", ".") + Path.DirectorySeparatorChar + CommitId;
+
             } 
         }
 
