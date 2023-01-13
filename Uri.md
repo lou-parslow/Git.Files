@@ -19,8 +19,8 @@ Scheme: https
 Segments: /, Home/, Index.htm
 UserEscaped: False
 UserInfo: user:password
-AbsolutePath: C:/Users/loupa/git/work/https.github.com/lou-parslow/Git.Files/Uri.md
-AbsoluteUri: file:///C:/Users/loupa/git/work/https.github.com/lou-parslow/Git.Files/Uri.md
+AbsolutePath: C:/Users/lparslow/work/github.com/lou-parslow/Git.Files/Uri.md
+AbsoluteUri: file:///C:/Users/lparslow/work/github.com/lou-parslow/Git.Files/Uri.md
 DnsSafeHost: 
 Fragment: 
 Host: 
@@ -31,12 +31,12 @@ IsDefaultPort: True
 IsFile: True
 IsLoopback: True
 IsUnc: False
-LocalPath: C:\Users\loupa\git\work\https.github.com\lou-parslow\Git.Files\Uri.md
-OriginalString: C:\Users\loupa\git\work\https.github.com\lou-parslow\Git.Files\Uri.md
-PathAndQuery: C:/Users/loupa/git/work/https.github.com/lou-parslow/Git.Files/Uri.md
+LocalPath: C:\Users\lparslow\work\github.com\lou-parslow\Git.Files\Uri.md
+OriginalString: C:\Users\lparslow\work\github.com\lou-parslow\Git.Files\Uri.md
+PathAndQuery: C:/Users/lparslow/work/github.com/lou-parslow/Git.Files/Uri.md
 Port: -1
 Query: 
 Scheme: file
-Segments: /, C:/, Users/, loupa/, git/, work/, https.github.com/, lou-parslow/, Git.Files/, Uri.md
+Segments: /, C:/, Users/, lparslow/, work/, github.com/, lou-parslow/, Git.Files/, Uri.md
 UserEscaped: False
 UserInfo: 
