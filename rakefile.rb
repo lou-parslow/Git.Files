@@ -5,7 +5,7 @@ task :publish => [:test] do
         SECRETS['NUGET_KEY'] = ENV['NUGET_KEY']
         Dir.glob('**/*.nupkg'){|nupkg|
             if(nupkg.include?('Release'))
-                PROJECT.run("dotnet nuget push #{nupkg} --skip-duplicate --api-key #{SECRETS['NUGET_KEY']} --source https://api.nuget.org/v3/index.json")
+                PROJECT.run("dotnet nuget push #{nupkg} --skip-duplicate --api-key #{SECRETS['nuget_api_key']} --source https://api.nuget.org/v3/index.json")
             end
         }   
     end
