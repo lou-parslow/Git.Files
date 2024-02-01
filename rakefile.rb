@@ -13,4 +13,4 @@ end
 
 
 
-task :default => [:test,:integrate,:publish]
+task :default => [:test,:integrate,:publish,:push]
