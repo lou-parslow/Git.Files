@@ -8,6 +8,8 @@ task :publish => [:test] do
                 PROJECT.run("dotnet nuget push #{nupkg} --skip-duplicate --api-key #{SECRETS['nuget_api_key']} --source https://api.nuget.org/v3/index.json")
             end
         }   
+	else
+		puts "NUGET_KEY not set"
     end
 end
 
