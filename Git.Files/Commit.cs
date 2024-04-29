@@ -6,6 +6,16 @@ namespace Git.Files
 {
 	public class Commit
 	{
+		public static Stream GetStream(Uri url, string commitId, string name)
+		{
+			var commit = new Commit(url, commitId);
+			if( commit.GetStream(name) is Stream stream)
+			{
+				return stream;
+			}
+			throw new Exception($"file {name} does not exist in {url}@{commitId}");
+		}
+
 		public Commit(Uri url, string commitId)
 		{
 			Url = url;
