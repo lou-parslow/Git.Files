@@ -2,7 +2,7 @@
 
   <PropertyGroup>
 	  <TargetFrameworks>net48;net6.0;net8.0</TargetFrameworks>
-	  <Version>0.0.13</Version>
+	  <Version>0.0.14</Version>
 	  <LangVersion>10.0</LangVersion>
 	  <Nullable>enable</Nullable>
 	  <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
